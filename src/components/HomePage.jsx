@@ -87,22 +87,23 @@ function LoginForm(props) {
                   onSubmit={() => handleSubmit()}
                   onError={(errors) => console.error(errors)}
                 >
-                  <div className="form-group">
+                  <div className="form-group" style={{ paddingBottom: "10px" }}>
                     <TextValidator
                       className="form-control"
                       label="Email"
                       onChange={(event) => handleChange(event, "email")}
                       name="email"
+                      type="text"
                       value={email}
-                      //   validators={["required", "isEmail"]}
-                      //   errorMessages={[
-                      //     "this field is required",
-                      //     "email is not valid",
-                      //   ]}
+                      validators={["required", "isEmail"]}
+                      errorMessages={[
+                        "this field is required",
+                        "email is not valid",
+                      ]}
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="form-group" style={{ height: "60px" }}>
                     <TextValidator
                       className="form-control"
                       label="Password"
@@ -110,11 +111,8 @@ function LoginForm(props) {
                       name="password"
                       value={password}
                       type="password"
-                      //   validators={["required", "isEmail"]}
-                      //   errorMessages={[
-                      //     "this field is required",
-                      //     "email is not valid",
-                      //   ]}
+                      validators={["required"]}
+                      errorMessages={["this field is required"]}
                     />
                   </div>
                   <button
