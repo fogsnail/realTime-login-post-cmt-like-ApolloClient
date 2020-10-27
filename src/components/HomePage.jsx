@@ -15,12 +15,12 @@ const SET_LOGIN = gql`
 `;
 
 function HomePage(props) {
-  const [isOpenLogin, setisOpenLogin] = useState(false);
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
   return (
     <div className="body">
       <div className="container">
         <button
-          onClick={() => setisOpenLogin(true)}
+          onClick={() => setIsOpenLogin(true)}
           type="button"
           className="btn btn-info btn-round"
         >
@@ -54,20 +54,20 @@ function LoginForm(props) {
 
   return (
     <div className="body">
-      <div className="container"></div>
-
-      <div
-      // className="modal fade"
-      // id="loginModal"
-      // tabIndex={-1}
-      // role="dialog"
-      // aria-labelledby="exampleModalLabel"
-      // aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-header border-bottom-0">
-              {/* <button
+      <div className="modal__overlay"></div>
+      <div className="container">
+        <div
+        // className="modal fade"
+        // id="loginModal"
+        // tabIndex={-1}
+        // role="dialog"
+        // aria-labelledby="exampleModalLabel"
+        // aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered " role="document">
+            <div className="modal-content">
+              <div className="modal-header border-bottom-0">
+                {/* <button
                 type="button"
                 className="close"
                 data-dismiss="modal"
@@ -76,64 +76,67 @@ function LoginForm(props) {
               >
                 <span aria-hidden="true">×</span>
               </button> */}
-            </div>
-
-            <div className="modal-body">
-              <div className="form-title text-center">
-                <h4>Login</h4>
               </div>
-              <div className="d-flex flex-column text-center">
-                <ValidatorForm
-                  onSubmit={() => handleSubmit()}
-                  onError={(errors) => console.error(errors)}
-                >
-                  <div className="form-group" style={{ paddingBottom: "10px" }}>
-                    <TextValidator
-                      className="form-control"
-                      label="Email"
-                      onChange={(event) => handleChange(event, "email")}
-                      name="email"
-                      type="text"
-                      value={email}
-                      validators={["required", "isEmail"]}
-                      errorMessages={[
-                        "this field is required",
-                        "email is not valid",
-                      ]}
-                    />
-                  </div>
 
-                  <div className="form-group" style={{ height: "60px" }}>
-                    <TextValidator
-                      className="form-control"
-                      label="Password"
-                      onChange={(event) => handleChange(event, "password")}
-                      name="password"
-                      value={password}
-                      type="password"
-                      validators={["required"]}
-                      errorMessages={["this field is required"]}
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="btn btn-info btn-block btn-round"
-                    // type="button"
-                    // className="close"
+              <div className="modal-body">
+                <div className="form-title text-center">
+                  <h4>Login</h4>
+                </div>
+                <div className="d-flex flex-column text-center">
+                  <ValidatorForm
+                    onSubmit={() => handleSubmit()}
+                    onError={(errors) => console.error(errors)}
                   >
-                    Login
-                  </button>
-                </ValidatorForm>
+                    <div
+                      className="form-group"
+                      style={{ paddingBottom: "10px" }}
+                    >
+                      <TextValidator
+                        className="form-control"
+                        label="Email"
+                        onChange={(event) => handleChange(event, "email")}
+                        name="email"
+                        type="text"
+                        value={email}
+                        validators={["required", "isEmail"]}
+                        errorMessages={[
+                          "this field is required",
+                          "email is not valid",
+                        ]}
+                      />
+                    </div>
+
+                    <div className="form-group" style={{ height: "60px" }}>
+                      <TextValidator
+                        className="form-control"
+                        label="Password"
+                        onChange={(event) => handleChange(event, "password")}
+                        name="password"
+                        value={password}
+                        type="password"
+                        validators={["required"]}
+                        errorMessages={["this field is required"]}
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="btn btn-info btn-block btn-round"
+                      // type="button"
+                      // className="close"
+                    >
+                      Login
+                    </button>
+                  </ValidatorForm>
+                </div>
               </div>
-            </div>
-            <div className="modal-footer d-flex justify-content-center">
-              <div className="signup-section">
-                Not a member yet?{" "}
-                <a href="#a" className="text-info">
-                  {" "}
-                  Sign Up
-                </a>
-                .
+              <div className="modal-footer d-flex justify-content-center">
+                <div className="signup-section">
+                  Not a member yet?
+                  <a href="#a" className="text-info">
+                    Sign Up
+                  </a>
+                  .
+                </div>
               </div>
             </div>
           </div>

@@ -11,8 +11,6 @@ export const ProtectedBackRoute = ({ component: Component, ...rest }) => {
         if (auth.isAuthenticated() === false) {
           return <Component {...props} />;
         } else {
-          //   console.log(props.location);
-          //   console.log("adgfagjhdajhg");
           return (
             <Redirect
               to={{

@@ -3,7 +3,7 @@ import auth from "./auth";
 
 export const Layout = (props) => {
   return (
-    <div className="layout container ">
+    <div className="body body-private">
       <button
         className="btn btn-info btn-round"
         onClick={() => {
