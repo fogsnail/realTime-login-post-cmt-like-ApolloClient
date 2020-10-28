@@ -9,8 +9,9 @@ import { ProtectedBackRoute } from "./components/protectedBack.route";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "http://localhost:5000/graphql",
+  uri: "http://10.1.16.186:8080/graphql",
   cache: new InMemoryCache(),
+  credentials: "include",
 });
 
 function App() {

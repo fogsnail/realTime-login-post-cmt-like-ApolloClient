@@ -1,4 +1,4 @@
-const value = JSON.parse(sessionStorage.getItem("authenticated"));
+const value = JSON.parse(localStorage.getItem("authenticated"));
 const authenticated = value || false;
 class Auth {
   constructor() {
@@ -7,13 +7,13 @@ class Auth {
 
   login(cb) {
     this.authenticated = true;
-    sessionStorage.setItem("authenticated", this.authenticated);
+    localStorage.setItem("authenticated", this.authenticated);
     cb();
   }
 
   logout(cb) {
     this.authenticated = false;
-    sessionStorage.setItem("authenticated", this.authenticated);
+    localStorage.setItem("authenticated", this.authenticated);
     cb();
   }
 

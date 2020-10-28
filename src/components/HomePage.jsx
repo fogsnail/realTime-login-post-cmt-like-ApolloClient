@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import auth from "./auth";
-import { gql } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 
-const SET_LOGIN = gql`
+const LOGIN_USER = gql`
   mutation LogIn($email: String!, $password: String!) {
     logIn(data: { email: $email, password: $password }) {
       isSuccess
@@ -37,13 +37,24 @@ export default HomePage;
 function LoginForm(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [setLogin, { loading, error }] = useMutation(LOGIN_USER);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
 
   function handleSubmit() {
     console.log("email : " + email, "password :" + password);
 
-    auth.login(() => {
-      props.history.push("/app");
-    });
+    setLogin({ variables: { email: email, password: password } })
+      .then((res) => {
+        console.log("test");
+        console.log(res);
+        auth.login(() => {
+          props.history.push("/app");
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function handleChange(event, type) {
