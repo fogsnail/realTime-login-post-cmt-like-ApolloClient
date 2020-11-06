@@ -10,6 +10,7 @@ function PostItem(props) {
   const [commentContent, setCommentContent] = useState("");
   // const [openComment,setOpenComment] = useState(true)
   const [postID, setPostID] = useState("");
+  const [isReadMore, setIsReadMore] = useState(false);
   const infoUserPost = props.post.owner.email;
 
   // const [isLiked, setIsLiked] = useState(false);
@@ -70,10 +71,10 @@ function PostItem(props) {
   //     setOpenComment(true)
   //   }
   // }
-  
+
   return (
     <div>
-      <h6 style={{ marginBottom: "1em" }} >
+      <h6 style={{ marginBottom: "1em" }}>
         {/* Comment Box */}
         <small className="text-muted">
           {/* with Material Design Guidelines */}
@@ -97,11 +98,26 @@ function PostItem(props) {
             </Moment>
           </span>
         </div>
-        <div className="post__content">
-          <h6>{props.post.content}</h6>
+        <div
+          className={
+            !isReadMore
+              ? "post__content--show-all post__content"
+              : "post__content"
+          }
+          // {`${isReadMore} ? post__content--show-all : `}
+        >
+          {props.post.content}
+
+          {/* <h6>{props.post.content}</h6> */}
         </div>
+        <span
+          className="content__read-more"
+          onClick={() => setIsReadMore(!isReadMore)}
+        >
+          {!isReadMore ? "Read more" : "Read less"}
+        </span>
         <hr></hr>
-        <details id={`details-${props.index}`} >
+        <details id={`details-${props.index}`}>
           <summary style={{ padding: "1em" }}>
             {props.post.comments} Comments
           </summary>
@@ -132,10 +148,10 @@ function PostItem(props) {
               id="exampleInputEmail1"
               placeholder="Add a comment"
               onChange={(event) => handleChange(event)}
-              onClick={()=>
-                document.getElementById(`details-${props.index}`).open = true
+              onClick={() =>
+                (document.getElementById(`details-${props.index}`).open = true)
               }
-              // onFocus={()=> 
+              // onFocus={()=>
               //   document.getElementById("details").open = true
               // }
             />

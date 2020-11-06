@@ -196,6 +196,7 @@ form {
 .post__title {
   font-size: large;
   font-weight: 600;
+  color: #000;
 }
 .post__title-time {
   margin-left: 10px;
@@ -204,6 +205,30 @@ form {
 
 .post__content {
   margin: 0 20px;
+  width: 90%;
+}
+.post__content--show-all {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.content__read-more {
+  /* position: absolute; */
+  margin: 0 20px;
+  /* color: red; */
+  color: rgb(10, 10, 10);
+  cursor: pointer;
+  font-weight: 600;
+  /* background-color: aqua; */
+}
+
+.content__read-more:hover {
+  text-decoration: underline;
 }
 
 .post__img-user {
