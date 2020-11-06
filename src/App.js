@@ -14,6 +14,8 @@ import "./App.css";
 import { AppLayout } from "./components/AppLayout";
 import { ProtectedRoute } from "./components/protected.route";
 import { ProtectedBackRoute } from "./components/protectedBack.route";
+import LoginForm from "./components/SignPage/LoginForm";
+import RegisterForm from "./components/SignPage/RegisterForm";
 import SignPageForm from "./components/SignPage/SignPageForm";
 
 // import { machineId, machineIdSync } from "node-machine-id";
@@ -72,6 +74,12 @@ function App() {
           <Switch>
             <ProtectedBackRoute exact path="/" component={SignPageForm} />
             <ProtectedRoute exact path="/app" component={AppLayout} />
+            <ProtectedBackRoute exact path="/login" component={LoginForm} />
+            <ProtectedBackRoute
+              exact
+              path="/register"
+              component={RegisterForm}
+            />
             <Route path="*" component={() => "404 NOT FOUND 😂😂😂😂😂"} />
           </Switch>
         </div>
