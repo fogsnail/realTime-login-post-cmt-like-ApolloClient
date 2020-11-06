@@ -21,7 +21,22 @@ function Posts(props) {
     subscribeNewPost();
     subscribeUpdateComment();
     subscribeDeleteComment();
+    // test()
   }, []);
+
+  // function test(){
+  //   // $(document).ready(function($){    
+  //   //   $(window).scroll(function(){
+  //   //           console.log("Scroll Fired");
+  //   //       });
+  //   //   });
+  //   var x = document.getElementById("root").style.height;
+  //   console.log(x);
+  //   window.addEventListener('scroll', function() {
+      
+  //     console.log(window.pageYOffset + 'px') 
+  //   });
+  // }
 
   function subscribeUpdateComment() {
     subscribeToMore({
@@ -95,7 +110,7 @@ function Posts(props) {
   return (
     <Fragment>
       {data.getAllPost.map((post, index) => (
-        <PostItem key={index} post={post} infoUser={props.infoUser}></PostItem>
+        <PostItem key={index} index={index} post={post} infoUser={props.infoUser}></PostItem>
       ))}
     </Fragment>
   );

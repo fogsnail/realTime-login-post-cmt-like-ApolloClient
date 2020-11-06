@@ -8,7 +8,7 @@ function PostItem(props) {
   const [addComment] = useMutation(ADD_COMMENT);
   const [setLikePost] = useMutation(LIKE_POST);
   const [commentContent, setCommentContent] = useState("");
-
+  // const [openComment,setOpenComment] = useState(true)
   const [postID, setPostID] = useState("");
   const infoUserPost = props.post.owner.email;
 
@@ -62,9 +62,18 @@ function PostItem(props) {
   // console.log(infoUserPost);
   // console.log(props);
 
+  // function checkOpenComment(){
+  //   if(openComment === true){
+  //     setOpenComment(false)
+  //   }
+  //   else{
+  //     setOpenComment(true)
+  //   }
+  // }
+  
   return (
     <div>
-      <h6 style={{ marginBottom: "1em" }}>
+      <h6 style={{ marginBottom: "1em" }} >
         {/* Comment Box */}
         <small className="text-muted">
           {/* with Material Design Guidelines */}
@@ -92,9 +101,9 @@ function PostItem(props) {
           <h6>{props.post.content}</h6>
         </div>
         <hr></hr>
-        <details>
+        <details id={`details-${props.index}`} >
           <summary style={{ padding: "1em" }}>
-            {props.post.comments} comments
+            {props.post.comments} Comments
           </summary>
 
           <ul className="list-group">
@@ -109,41 +118,6 @@ function PostItem(props) {
             ))}
           </ul>
         </details>
-
-        {/* <ul id="lastComment" className="list-group">
-            <li className="list-group-item">
-              <span className="circle">
-                <img
-                  src="http://bigbeehive.com/demo/orientplay-angular/img/user/vector4.png"
-                  alt="user"
-                />
-              </span>
-              <span className="title">
-                <a>
-                  Sandra Adams
-                  {
-                    // props.post.listOfComment[0].owner.profileName
-                    // props.post.listOfComment[props.post.comments - 1].owner.profileName
-                  }
-                </a>
-                <time> 6:00 PM</time>
-                <p>
-                  <a href="#">Peter </a> This is without doubt the
-                  greatest  i’ve ever seen.
-                </p>
-              </span>
-              <ul className="list-inline actions" href="#">
-                <li>
-                  <a className="edit" href="#" title="Edit comment">
-                    Edit
-                  </a>
-                </li>
-                <li className="">
-                  <a className="delete" href="#" title="Delete comment" />
-                </li>
-              </ul>
-            </li>
-          </ul> */}
         <form
           onSubmit={(event) => {
             addComments(event);
@@ -158,6 +132,12 @@ function PostItem(props) {
               id="exampleInputEmail1"
               placeholder="Add a comment"
               onChange={(event) => handleChange(event)}
+              onClick={()=>
+                document.getElementById(`details-${props.index}`).open = true
+              }
+              // onFocus={()=> 
+              //   document.getElementById("details").open = true
+              // }
             />
           </fieldset>
           <button
