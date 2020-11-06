@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import { Link, Redirect, Route } from "react-router-dom";
 import { REGISTER_USER } from "../../graphqls/mutations";
 
 function RegisterForm(props) {
@@ -13,7 +14,7 @@ function RegisterForm(props) {
   const [registerUser] = useMutation(REGISTER_USER);
   //   if (loading) return <h1>Loading...</h1>;
   //   if (error) return <p>Error :(</p>;
-
+  console.log(props.history);
   function handleSubmit(event) {
     event.preventDefault();
     console.log(
@@ -23,6 +24,7 @@ function RegisterForm(props) {
       "password :" + password,
       passwordConfirm
     );
+
     if (password === passwordConfirm) {
       registerUser({
         variables: {
@@ -34,20 +36,19 @@ function RegisterForm(props) {
       })
         .then((res) => {
           console.log(res);
+          // props.history.push("/dmnadmnsa");
+          // <Redirect from="register" to="/" />;
+          // history.push()
           if (res.data.register.isSuccess === true)
             alert("Register successfully.");
-          // else {
-          //   alert(res.data.logIn.message);
-          // }
-          props.switchForm(false);
-          // else {
-          //   alert()
-          // }
+          else {
+            alert(res.data.register.message);
+          }
         })
         .catch((err) => {
           console.log(err);
         });
-    } else alert("Password confirmation must match Password");
+    } else alert("Password confirmation must match Password !");
   }
 
   function handleChange(event) {
@@ -69,15 +70,16 @@ function RegisterForm(props) {
           <div className="modal-dialog modal-dialog-centered " role="document">
             <div className="modal-content">
               <div className="modal-header border-bottom-0">
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  onClick={() => props.onCloseForm()}
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
+                <Link to="/">
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </Link>
               </div>
 
               <div className="modal-body">
@@ -179,13 +181,9 @@ function RegisterForm(props) {
               <div className="modal-footer d-flex justify-content-center">
                 <div className="signup-section">
                   Back to{" "}
-                  <a
-                    href="#a"
-                    className="text-info"
-                    onClick={() => props.switchForm(false)}
-                  >
-                    Login
-                  </a>
+                  <Link to="/login">
+                    <p className="text-info">Login</p>
+                  </Link>
                   .
                 </div>
               </div>

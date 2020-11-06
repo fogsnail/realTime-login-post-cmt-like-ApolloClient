@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import { Link, Redirect } from "react-router-dom";
 import { LOGIN_USER } from "../../graphqls/mutations";
 import auth from "../auth";
 
@@ -56,15 +57,16 @@ function LoginForm(props) {
           <div className="modal-dialog modal-dialog-centered " role="document">
             <div className="modal-content">
               <div className="modal-header border-bottom-0">
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  onClick={() => props.onCloseForm()}
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
+                <Link to="/">
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </Link>
               </div>
 
               <div className="modal-body">
@@ -121,13 +123,9 @@ function LoginForm(props) {
               <div className="modal-footer d-flex justify-content-center">
                 <div className="signup-section">
                   Not a member yet?{""}
-                  <a
-                    href="#a"
-                    className="text-info"
-                    onClick={() => props.switchForm(true)}
-                  >
-                    Register
-                  </a>
+                  <Link to="/register">
+                    <p className="text-info">Register</p>
+                  </Link>
                   .
                 </div>
               </div>

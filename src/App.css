@@ -47,10 +47,16 @@ body {
   }
 }
 .modal-header .close {
-  margin-top: -1.5rem;
+  /* margin-top: -1.5rem; */
+  /* float: right; */
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  cursor: pointer;
+  /* margin-bottom: 50px; */
 }
 .form-title {
-  margin: -2rem 0rem 2rem;
+  margin: 0rem 0rem 2rem;
 }
 .btn-round {
   border-radius: 3rem;
@@ -69,6 +75,10 @@ body {
   animation: fadeIn linear 0.2s;
   animation: growth linear 0.2s;
   border-radius: 8px;
+}
+
+.text-info {
+  display: inline;
 }
 
 .modal__overlay {
