@@ -1,28 +1,78 @@
-import logo from "./logo.svg";
+import {
+  ApolloClient,
+  ApolloLink,
+  ApolloProvider,
+  concat,
+  HttpLink,
+  InMemoryCache,
+  split,
+} from "@apollo/client";
+import { WebSocketLink } from "@apollo/client/link/ws";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import HomePage from "./components/HomePage";
-import { Layout } from "./components/Layout";
-
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { AppLayout } from "./components/AppLayout";
 import { ProtectedRoute } from "./components/protected.route";
 import { ProtectedBackRoute } from "./components/protectedBack.route";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import SignPageForm from "./components/SignPage/SignPageForm";
 
-const client = new ApolloClient({
-  uri: "http://10.1.16.186:8080/graphql",
-  cache: new InMemoryCache(),
+// import { machineId, machineIdSync } from "node-machine-id";
+//  subcription
+
+// import { machineId, machineIdSync } from "node-machine-id";
+
+const wsLink = new WebSocketLink({
+  uri: `ws:/10.1.16.186:8080/graphql`,
+  options: {
+    reconnect: true,
+  },
   credentials: "include",
 });
 
+const httpLink = new HttpLink({
+  uri: "http://10.1.16.186:8080/graphql",
+  // cache: new InMemoryCache(),
+  credentials: "include",
+});
+
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
+    );
+  },
+  wsLink,
+  httpLink
+);
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
+  operation.setContext({
+    headers: {
+      authorization: `Bearer ${localStorage.getItem("token")}` || null,
+    },
+  });
+  return forward(operation);
+});
+
+const client = new ApolloClient({
+  // link: splitLink,
+  link: concat(authMiddleware, splitLink),
+  cache: new InMemoryCache(),
+});
+
 function App() {
+  // console.log(machineIdSync(true));
+
   return (
     <ApolloProvider client={client}>
       <Router>
         <div className="App">
           <Switch>
-            <ProtectedBackRoute exact path="/" component={HomePage} />
-            <ProtectedRoute exact path="/app" component={Layout} />
-            <Route path="*" component={() => "404 NOT FOUND"} />
+            <ProtectedBackRoute exact path="/" component={SignPageForm} />
+            <ProtectedRoute exact path="/app" component={AppLayout} />
+            <Route path="*" component={() => "404 NOT FOUND 😂😂😂😂😂"} />
           </Switch>
         </div>
       </Router>
