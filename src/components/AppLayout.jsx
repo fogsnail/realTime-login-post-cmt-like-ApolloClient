@@ -35,7 +35,7 @@ export const AppLayout = (props) => {
     // infoUser();
     addPostCt({ variables: { post: post } }).then((res) => console.log(res));
   }
-
+  console.log(data)
   return (
     <div className="body-private">
       <h4
