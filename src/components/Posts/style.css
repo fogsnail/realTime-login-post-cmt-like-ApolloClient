@@ -207,7 +207,7 @@ form {
   margin: 0 20px;
   width: 90%;
 }
-.post__content--show-all {
+/* .post__content--show-all {
   overflow: hidden;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -215,7 +215,7 @@ form {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-}
+} */
 
 .content__read-more {
   /* position: absolute; */
