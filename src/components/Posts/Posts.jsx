@@ -21,22 +21,22 @@ function Posts(props) {
     subscribeNewPost();
     subscribeUpdateComment();
     subscribeDeleteComment();
-    // test()
+    scrollPostList()
   }, []);
 
-  // function test(){
-  //   // $(document).ready(function($){    
-  //   //   $(window).scroll(function(){
-  //   //           console.log("Scroll Fired");
-  //   //       });
-  //   //   });
+  function scrollPostList(){
+    // $(document).ready(function($){    
+    //   $(window).scroll(function(){
+    //           console.log("Scroll Fired");
+    //       });
+    //   });
     
-  //   window.addEventListener('scroll', function() {
-  //     var x = document.getElementById("root").style.height;
-  //     console.log(x);
-  //     console.log(window.pageYOffset + 'px') 
-  //   });
-  // }
+    window.addEventListener('scroll', function() {
+      var x = document.body.scrollHeight;
+      console.log(x);
+      console.log(window.pageYOffset + 'px') 
+    });
+  }
 
   function subscribeUpdateComment() {
     subscribeToMore({
