@@ -4,6 +4,9 @@ import Moment from "react-moment";
 import { ADD_COMMENT, LIKE_POST } from "../../graphqls/mutations";
 import Comment from "./Comment";
 
+
+const lengthPost = 60;
+
 function PostItem(props) {
   const [addComment] = useMutation(ADD_COMMENT);
   const [setLikePost] = useMutation(LIKE_POST);
@@ -71,7 +74,21 @@ function PostItem(props) {
   //     setOpenComment(true)
   //   }
   // }
-
+  function showContent(){
+    var contentArr = props.post.content.split(' ');
+    var result = {};
+    result.content = '';
+    result.showMore = false;
+    var i;
+    for(i = 0; i <contentArr.length;i++){
+      result.content += contentArr[i] + ' '
+      if(i === lengthPost){
+        result.showMore = true;
+        break;
+      }
+    }
+    return result
+  }
   return (
     <div>
       <h6 style={{ marginBottom: "1em" }}>
@@ -105,16 +122,17 @@ function PostItem(props) {
               : "post__content"
           }
           // {`${isReadMore} ? post__content--show-all : `}
+          
         >
-          {props.post.content}
-
+          {/* {props.post.content} */}
+          {showContent().content}
           {/* <h6>{props.post.content}</h6> */}
         </div>
         <span
           className="content__read-more"
           onClick={() => setIsReadMore(!isReadMore)}
         >
-          {!isReadMore ? "Read more" : "Read less"}
+          {showContent().showMore && (!isReadMore ? "Read more" : "Read less")}
         </span>
         <hr></hr>
         <details id={`details-${props.index}`}>

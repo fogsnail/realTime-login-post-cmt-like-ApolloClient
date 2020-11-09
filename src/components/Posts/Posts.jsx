@@ -30,10 +30,10 @@ function Posts(props) {
   //   //           console.log("Scroll Fired");
   //   //       });
   //   //   });
-  //   var x = document.getElementById("root").style.height;
-  //   console.log(x);
+    
   //   window.addEventListener('scroll', function() {
-      
+  //     var x = document.getElementById("root").style.height;
+  //     console.log(x);
   //     console.log(window.pageYOffset + 'px') 
   //   });
   // }
