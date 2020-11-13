@@ -63,14 +63,8 @@ export const UPDATE_COMMENT = gql`
     updateComment(
       data: { commentID: $commentID, newCommentContent: $newCommentContent }
     ) {
-      _id
-      owner {
-        _id
-        profileName
-        email
-      }
-      content
-      createdAt
+      isSuccess
+      message
     }
   }
 `;

@@ -5,6 +5,9 @@ export const LIKE_POST_SUB = gql`
     likePostSub {
       likes
       _id
+      listOfLike {
+        email
+      }
     }
   }
 `;
@@ -25,9 +28,10 @@ export const UPDATE_COMMENT_SUB = gql`
   subscription {
     updateCommentSub {
       owner {
-        _id
-        profileName
+        email
       }
+      content
+      createdAt
     }
   }
 `;
