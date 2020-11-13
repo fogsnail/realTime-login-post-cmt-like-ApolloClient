@@ -22,6 +22,7 @@ function Comment(props) {
         variables: {
           commentID: id,
           newCommentContent: updateCommentContent,
+          postID: props.postID,
         },
       })
         .then((res) => {
@@ -44,8 +45,8 @@ function Comment(props) {
         variables: { commentID: cmt._id, postID: props.postID },
       })
         .then((res) => {
+          console.log(res);
           if (res.data.deleteComment.isSuccess === true) {
-            alert("Deleted successfully");
             // confirm("adgaj");         console.log("dakjs");
           }
           // var a = confirm("xoa");
@@ -55,6 +56,7 @@ function Comment(props) {
           //   console.log("oke")
           // else
           // console.log("oke")
+          alert("Deleted successfully");
         })
         .catch((err) => console.log(err));
     } else {

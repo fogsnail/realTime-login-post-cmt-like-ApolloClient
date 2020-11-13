@@ -9,34 +9,72 @@ export const USER = gql`
   }
 `;
 
-export const GET_POST = gql`
+export const GET_POST_1 = gql`
   query {
     getAllPost {
-      _id
-      owner {
-        profileName
+      data {
         _id
-        email
-      }
-      content
-      likes
-      listOfLike {
-        _id
-        profileName
-        email
-      }
-      createdAt
-      comments
-      listOfComment {
         owner {
+          profileName
+          _id
+          email
+        }
+        content
+        likes
+        listOfLike {
           _id
           profileName
           email
         }
-        content
         createdAt
-        _id
+        comments
+        listOfComment {
+          owner {
+            _id
+            profileName
+            email
+          }
+          content
+          createdAt
+          _id
+        }
       }
+      totalPost
+    }
+  }
+`;
+
+export const GET_POST = gql`
+  query getAllPost($limit: Float!, $cursor: String) {
+    getAllPost(paginationInput: { limit: $limit, cursor: $cursor }) {
+      data {
+        _id
+        owner {
+          profileName
+          _id
+          email
+        }
+        content
+        likes
+        listOfLike {
+          _id
+          profileName
+          email
+        }
+        createdAt
+        comments
+        listOfComment {
+          owner {
+            _id
+            profileName
+            email
+          }
+          content
+          createdAt
+          _id
+        }
+      }
+      totalPost
     }
   }
 `;

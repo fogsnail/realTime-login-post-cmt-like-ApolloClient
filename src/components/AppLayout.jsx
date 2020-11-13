@@ -19,6 +19,8 @@ export const AppLayout = (props) => {
   const [addPostCt] = useMutation(ADD_POST);
   const [openFormCmt, setOpenFormCmt] = useState(false);
   const [post, setPost] = useState("nothing");
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
+
   // const { data } = useQuery(USER);
 
   const { loading, error, data } = useQuery(USER);
@@ -30,12 +32,16 @@ export const AppLayout = (props) => {
     if (event.target.name === "post") setPost(event.target.value);
   }
 
+  function setLoadingPage() {
+    setIsLoadingPage(true);
+    // console.log(isLoadingPage);
+  }
+
   function addPost() {
     console.log(post);
     // infoUser();
     addPostCt({ variables: { post: post } }).then((res) => console.log(res));
   }
-  console.log(data);
 
   return (
     <div className="body-private">
@@ -123,9 +129,10 @@ export const AppLayout = (props) => {
           </Dialog>
         </Grid>
 
-        <Grid item md={5} sm={6} xs={12}>
+        <Grid id="post" item md={5} sm={6} xs={12}>
           <h1>List</h1>
-          <Posts infoUser={data} />
+          <Posts infoUser={data} setLoadingPage={setLoadingPage} />
+          {/* {isLoadingPage ? <h3>Loading</h3> : ""} */}
         </Grid>
       </Grid>
     </div>

@@ -3,8 +3,23 @@ import { gql } from "@apollo/client";
 export const LIKE_POST_SUB = gql`
   subscription {
     likePostSub {
-      likes
-      _id
+      likes,
+      _id,
+      userLike{
+        _id,
+        profileName,
+        email
+      }
+      owner{
+        _id
+        profileName
+        email
+      }
+      listOfLike{
+        _id
+        profileName
+        email
+      }
     }
   }
 `;
@@ -12,11 +27,15 @@ export const LIKE_POST_SUB = gql`
 export const COMMENT_SUB = gql`
   subscription {
     commentSub {
-      owner {
-        email
-      }
-      content
-      createdAt
+      toPostId
+      _id
+    owner {
+      email
+      _id
+      email
+    }
+    content
+    createdAt
     }
   }
 `;
@@ -24,10 +43,15 @@ export const COMMENT_SUB = gql`
 export const UPDATE_COMMENT_SUB = gql`
   subscription {
     updateCommentSub {
-      owner {
+      _id,
+      owner{
         _id
         profileName
+        email
       }
+      content,
+      createdAt
+      toPostId
     }
   }
 `;
