@@ -86,35 +86,18 @@ function Posts(props) {
       console.log("loading");
     }
   }
+
   function subscribeUpdateComment() {
     subscribeToMore({
       document: UPDATE_COMMENT_SUB,
       variables: {},
       updateQuery: (prev, { subscriptionData }) => {
+        console.log(prev);
+        console.log(subscriptionData);
         if (!subscriptionData.data) return prev;
-        // return Object.assign({}, prev, {
-        //   getAllPost: {},
-        // });
-        else {
-          var pageIndex = getItemByID(
-            prev.getAllPost.data,
-            subscriptionData.data.updateCommentSub.toPostId
-          );
-          var prevPost = JSON.parse(JSON.stringify(prev));
-          var newComment = JSON.parse(JSON.stringify(subscriptionData));
-          delete newComment.data.updateCommentSub.toPostId;
-          if (pageIndex === -1) {
-            return prev;
-          } else {
-            var commentIndex = getItemByID(
-              prevPost.getAllPost.data[pageIndex].listOfComment,
-              subscriptionData.data.updateCommentSub_id
-            );
-            prevPost.getAllPost.data[pageIndex].listOfComment[commentIndex] =
-              newComment.data.commentSub;
-            return { ...prevPost };
-          }
-        }
+        return Object.assign({}, prev, {
+          getAllPost: {},
+        });
       },
     });
   }
@@ -124,28 +107,10 @@ function Posts(props) {
       document: DELETE_COMMENT_SUB,
       variables: {},
       updateQuery: (prev, { subscriptionData }) => {
-        console.log(prev);
-        console.log(subscriptionData);
         if (!subscriptionData.data) return prev;
-        // return Object.assign({}, prev, {
-        //   getAllPost: {},
-        // });
-        else {
-          var pageIndex = getItemByID(
-            prev.getAllPost.data,
-            subscriptionData.data.deleteCommentSub._id
-          );
-          var prevPost = JSON.parse(JSON.stringify(prev));
-          if (pageIndex === -1) {
-            return prev;
-          } else {
-            prevPost.getAllPost.data[pageIndex].comments =
-              subscriptionData.data.deleteCommentSub.comments;
-            prevPost.getAllPost.data[pageIndex].listOfComment =
-              subscriptionData.data.deleteCommentSub.listOfComment;
-            return { ...prevPost };
-          }
-        }
+        return Object.assign({}, prev, {
+          getAllPost: {},
+        });
       },
     });
   }
@@ -168,24 +133,29 @@ function Posts(props) {
       document: LIKE_POST_SUB,
       variables: {},
       updateQuery: (prev, { subscriptionData }) => {
+        console.log(prev);
+        console.log(subscriptionData);
+
         if (!subscriptionData.data) return prev;
-        else {
-          var indexPage = getItemByID(
-            prev.getAllPost.data,
-            subscriptionData.data.likePostSub._id
-          );
-          var prevPost = JSON.parse(JSON.stringify(prev));
-          if (indexPage === -1) {
-            return prev;
-          } else {
-            prevPost.getAllPost.data[indexPage].likes =
-              subscriptionData.data.likePostSub.likes;
-            prevPost.getAllPost.data[indexPage].listOfLike =
-              subscriptionData.data.likePostSub.listOfLike;
-            console.log(prev);
-            return { ...prevPost };
-          }
-        }
+        return Object.assign({}, prev, {
+          // getAllPost: {},
+        });
+
+        // else {
+        //   var indexPage = getItemByID(
+        //     prev.getAllPost.data,
+        //     subscriptionData.data.likePostSub._id
+        //   );
+        //   var prevPost = JSON.parse(JSON.stringify(prev));
+        //   prevPost.getAllPost.data[indexPage].likes =
+        //     subscriptionData.data.likePostSub.likes;
+        //   prevPost.getAllPost.data[indexPage].listOfLike =
+        //     subscriptionData.data.likePostSub.listOfLike;
+        //   console.log(prev);
+        //   console.log(prevPost);
+
+        //   return { ...prevPost };
+        // }
       },
     });
   }
@@ -198,27 +168,9 @@ function Posts(props) {
         console.log(prev);
         console.log(subscriptionData);
         if (!subscriptionData.data) return prev;
-        // return Object.assign({}, prev, {
-        //   getAllPost: {},
-        // });
-        else {
-          var indexPage = getItemByID(
-            prev.getAllPost.data,
-            subscriptionData.data.commentSub.toPostId
-          );
-          var prevPost = JSON.parse(JSON.stringify(prev));
-          // var newComment = JSON.parse(JSON.stringify(subscriptionData));
-          // delete newComment.data.commentSub.toPostId
-          if (indexPage === -1) {
-            return prev;
-          } else {
-            prevPost.getAllPost.data[indexPage].comments += 1;
-            prevPost.getAllPost.data[indexPage].listOfComment.push(
-              subscriptionData.data.commentSub
-            );
-            return { ...prevPost };
-          }
-        }
+        return Object.assign({}, prev, {
+          getAllPost: {},
+        });
       },
     });
   }
@@ -249,7 +201,7 @@ function Posts(props) {
       {data &&
         data.getAllPost.data.map((post, index) => (
           <PostItem
-            // likePostSub={likePostSub.data}
+            likePostSub={likePostSub.data}
             key={index}
             index={index}
             post={post}

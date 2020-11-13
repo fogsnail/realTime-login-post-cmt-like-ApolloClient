@@ -132,7 +132,7 @@ export const AppLayout = (props) => {
         <Grid id="post" item md={5} sm={6} xs={12}>
           <h1>List</h1>
           <Posts infoUser={data} setLoadingPage={setLoadingPage} />
-          {isLoadingPage ? <h3>Loading</h3> : ""}
+          {/* {isLoadingPage ? <h3>Loading</h3> : ""} */}
         </Grid>
       </Grid>
     </div>

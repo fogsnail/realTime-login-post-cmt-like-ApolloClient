@@ -22,6 +22,7 @@ function Comment(props) {
         variables: {
           commentID: id,
           newCommentContent: updateCommentContent,
+          postID: props.postID,
         },
       })
         .then((res) => {
