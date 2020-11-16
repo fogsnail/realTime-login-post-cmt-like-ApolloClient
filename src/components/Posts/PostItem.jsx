@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import Moment from "react-moment";
-import { ADD_COMMENT, LIKE_POST } from "../../graphqls/mutations";
+import { ADD_COMMENT, LIKE_POST, DELETE_POST } from "../../graphqls/mutations";
 import Comment from "./Comment";
 
 const lengthPost = 60;
@@ -9,6 +9,7 @@ const lengthPost = 60;
 function PostItem(props) {
   const [addComment] = useMutation(ADD_COMMENT);
   const [setLikePost] = useMutation(LIKE_POST);
+  const [deletePost] = useMutation(DELETE_POST);
   const [commentContent, setCommentContent] = useState("");
   // const [openComment,setOpenComment] = useState(true)
   const [isAction, setIsAction] = useState(false);
@@ -154,7 +155,25 @@ function PostItem(props) {
             ) : (
               ""
             )}
-            {checkEditPost() ? <div className="action__edit">Delete</div> : ""}
+            {checkEditPost() ? 
+              <div 
+                className="action__edit" 
+                onClick={()=>{
+                  deletePost({
+                    variables:{
+                      postID:props.post._id
+                    }
+                  }).then(res =>{
+                    if(res.data.deletePost.isSuccess){
+                      setIsAction(!isAction)
+                    }
+                  })
+                }}
+              >
+                Delete
+              </div> : 
+              ""
+            }
           </div>
         </div>
         <div className={"post__content"}>

@@ -102,3 +102,12 @@ export const UPDATE_POST = gql`
     }
   }
 `;
+
+export const DELETE_POST = gql`
+  mutation DeletePost($postID: String!){
+    deletePost(postID: $postID){
+      isSuccess
+      message
+    }
+  }
+`
