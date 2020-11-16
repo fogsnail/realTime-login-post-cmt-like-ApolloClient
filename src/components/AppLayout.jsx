@@ -55,9 +55,9 @@ export const AppLayout = (props) => {
         {data.me.profileName}
         🙊🐤🦑🐙🐢🦂🕸🕷🦗🦗🦟🐜🐞🦋🐛🐴🐺🐕🐩🐲
       </h4>
-      <div>
+      <div className="btn-action">
         <button
-          className="btn btn-info btn-round ml-4 mb-2"
+          className="btn btn-info btn-round  ml-4 mb-2"
           onClick={() => {
             setLogout().then((res) => {
               console.log(res);
@@ -70,8 +70,6 @@ export const AppLayout = (props) => {
         >
           Logout
         </button>
-      </div>
-      <div>
         <button
           className="btn btn-info btn-round ml-4"
           onClick={() => setOpenFormCmt(true)}

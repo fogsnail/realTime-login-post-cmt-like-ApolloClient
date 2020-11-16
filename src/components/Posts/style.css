@@ -16,6 +16,10 @@ button {
   border: none;
 }
 
+.btn-action {
+  position: fixed;
+}
+
 .list-group-item p a {
   font-weight: 500;
   color: rgba(3, 161, 241, 1);

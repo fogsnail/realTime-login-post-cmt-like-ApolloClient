@@ -22,7 +22,7 @@ function Posts(props) {
     }
   );
 
-  // const { subscribeToMore } = useQuery(GET_POST);
+  // const { subscribeToMore } = useQuery(GET_POST);]
   const [idLastPost, setIdLastPost] = useState(null);
   const likePostSub = useSubscription(LIKE_POST_SUB);
   // const {
@@ -155,14 +155,10 @@ function Posts(props) {
       document: ADD_POST_SUB,
       variables: {},
       updateQuery: (prev, { subscriptionData }) => {
-        console.log(prev);
-        console.log(subscriptionData)
         if (!subscriptionData.data) return prev;
-        else {
-          var prevPost = JSON.parse(JSON.stringify(prev));
-          prevPost.getAllPost.data.unshift(subscriptionData.data.createPostSub)
-          return {...prevPost}
-        }
+        return Object.assign({}, prev, {
+          getAllPost: {},
+        });
       },
     });
   }
