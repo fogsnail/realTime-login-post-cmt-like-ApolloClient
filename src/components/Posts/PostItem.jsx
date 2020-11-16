@@ -11,6 +11,7 @@ function PostItem(props) {
   const [setLikePost] = useMutation(LIKE_POST);
   const [commentContent, setCommentContent] = useState("");
   // const [openComment,setOpenComment] = useState(true)
+  const [isAction, setIsAction] = useState(false);
   const [postID, setPostID] = useState("");
   const [isReadMore, setIsReadMore] = useState(false);
   const infoUserPost = props.post.owner.email;
@@ -62,17 +63,6 @@ function PostItem(props) {
     return result;
   }
 
-  // console.log(infoUserPost);
-  // console.log(props);
-
-  // function checkOpenComment(){
-  //   if(openComment === true){
-  //     setOpenComment(false)
-  //   }
-  //   else{
-  //     setOpenComment(true)
-  //   }
-  // }
   function showContent() {
     var contentArr = props.post.content.split(" ");
     var result = {};
@@ -90,6 +80,18 @@ function PostItem(props) {
 
     return result;
   }
+
+  function checkEditPost() {
+    var result = false;
+    // props.me && console.log(props.me.email);
+    console.log(props.post.owner.email);
+    if (props.infoUser.me.email === props.post.owner.email)
+      return (result = true);
+    console.log(result);
+    return result;
+  }
+
+  console.log(props);
   return (
     <div>
       <h6 style={{ marginBottom: "1em" }}>
@@ -100,7 +102,7 @@ function PostItem(props) {
       </h6>
 
       <div className="card paper">
-        <div>
+        <div className="post__header">
           <span>
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/0/04/User_icon_1.svg"
@@ -115,6 +117,19 @@ function PostItem(props) {
               {props.post.createdAt}
             </Moment>
           </span>
+          <span
+            className="header__action"
+            onClick={() => setIsAction(!isAction)}
+          >
+            ...
+          </span>
+
+          <div
+            className={isAction ? "action__group--show" : "action__group--hide"}
+          >
+            {checkEditPost() ? <div className="action__edit">Edit</div> : ""}
+            {checkEditPost() ? <div className="action__edit">Delete</div> : ""}
+          </div>
         </div>
         <div className={"post__content"}>
           {!isReadMore ? showContent().content : props.post.content}
