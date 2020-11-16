@@ -197,6 +197,57 @@ form {
 .post {
   display: inline-block;
 }
+
+.post__header {
+  /* background-color: red; */
+  position: relative;
+}
+
+.header__action {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  padding: 2px 10px;
+
+  font-weight: 600;
+  height: 20px;
+  line-height: 10px;
+
+  border: #000;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.header__action:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 1);
+}
+
+.action__group--hide {
+  display: none;
+}
+
+.action__group--show {
+  display: block;
+  position: absolute;
+  top: 24px;
+  right: 10px;
+  padding: 4px;
+  font-size: 12px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+}
+
+.action__edit {
+  margin: 2px;
+}
+
+.action__edit:hover {
+  font-weight: 600;
+  color: #000;
+  cursor: pointer;
+}
+
 .post__title {
   font-size: large;
   font-weight: 600;
