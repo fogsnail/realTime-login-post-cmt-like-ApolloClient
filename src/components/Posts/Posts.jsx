@@ -8,11 +8,11 @@ import {
   LIKE_POST_SUB,
   UPDATE_COMMENT_SUB,
   LIKE_POST_NOTI_SUB,
-  COMMENT_POST_NOTI_SUB
+  COMMENT_POST_NOTI_SUB,
 } from "../../graphqls/subscriptions";
 import PostItem from "./PostItem";
 import "./style.css";
-import {toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure({
   autoClose: 5000,
@@ -23,30 +23,25 @@ toast.configure({
   hideProgressBar: false,
 });
 
-
 function Posts(props) {
   const { loading, data, error, fetchMore, subscribeToMore } = useQuery(
     GET_POST,
     {
       variables: {
-        limit: 5
+        limit: 5,
       },
     }
   );
-  const {data:likePostNotiSub} = useSubscription(LIKE_POST_NOTI_SUB,
-    {
-      variables:{
-        owner : props.infoUser.me.email
-      }
-    }
-  );
-  const {data:commentNotiSub} = useSubscription(COMMENT_POST_NOTI_SUB,
-    {
-      variables:{
-        owner : props.infoUser.me.email
-      }
-    }
-  );
+  const { data: likePostNotiSub } = useSubscription(LIKE_POST_NOTI_SUB, {
+    variables: {
+      owner: props.infoUser.me.email,
+    },
+  });
+  const { data: commentNotiSub } = useSubscription(COMMENT_POST_NOTI_SUB, {
+    variables: {
+      owner: props.infoUser.me.email,
+    },
+  });
 
   useEffect(() => {
     subscribeNewLike();
@@ -63,14 +58,15 @@ function Posts(props) {
     };
   }, [data]);
 
+
   useEffect(() =>{
     if(likePostNotiSub){
       if(likePostNotiSub.likePostNotiSub.userLike.email !== props.infoUser.me.email){
         toast.info(`🦄 ${likePostNotiSub.likePostNotiSub.userLike.profileName} like your post`);
       }
     }
-    
-  },[likePostNotiSub])
+  }, [likePostNotiSub]);
+
 
   useEffect(()=>{
     if(commentNotiSub){
@@ -79,8 +75,7 @@ function Posts(props) {
         toast.info(`🦄 ${commentNotiSub.commentNotiSub.userComment.profileName} comment your post`);
       }
     }
-  },[commentNotiSub])
-
+  }, [commentNotiSub]);
 
   function scrollPostList() {
     const listPost = document.getElementById("post");
@@ -261,8 +256,6 @@ function Posts(props) {
     });
   }
 
- 
-
   function getItemByID(listPage, id) {
     var result = -1;
     listPage.forEach((page, index) => {
@@ -283,7 +276,6 @@ function Posts(props) {
   //   console.log(likePostSub.data);
   //   data. =
   // }
-  // console.log(data);
   return (
     <Fragment>
       {data &&
@@ -294,6 +286,9 @@ function Posts(props) {
             index={index}
             post={post}
             infoUser={props.infoUser}
+            shouldOpenDialog={(postSelected) => {
+              props.shouldOpenDialog(postSelected);
+            }}
           ></PostItem>
         ))}
     </Fragment>
