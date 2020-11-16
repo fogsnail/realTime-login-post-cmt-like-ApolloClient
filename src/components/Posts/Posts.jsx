@@ -15,9 +15,9 @@ import "./style.css";
 import {toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 toast.configure({
-  autoClose: 2000,
+  autoClose: 5000,
   draggable: false,
-  limit: 3,
+  limit: 5,
   closeOnClick: true,
   pauseOnHover: true,
   hideProgressBar: false,
@@ -66,7 +66,7 @@ function Posts(props) {
   useEffect(() =>{
     if(likePostNotiSub){
       if(likePostNotiSub.likePostNotiSub.userLike.email !== props.infoUser.me.email){
-        toast.info(`🦄 ${likePostNotiSub.likePostNotiSub.userLike.email} like your post`);
+        toast.info(`🦄 ${likePostNotiSub.likePostNotiSub.userLike.profileName} like your post`);
       }
     }
     
@@ -76,12 +76,12 @@ function Posts(props) {
     if(commentNotiSub){
       console.log(commentNotiSub.commentNotiSub.userComment.email)
       if(commentNotiSub.commentNotiSub.userComment.email !== props.infoUser.me.email){
-        toast.info(`🦄 ${commentNotiSub.commentNotiSub.userComment.email} comment your post`);
+        toast.info(`🦄 ${commentNotiSub.commentNotiSub.userComment.profileName} comment your post`);
       }
     }
   },[commentNotiSub])
 
-  
+
   function scrollPostList() {
     const listPost = document.getElementById("post");
     // console.log("scrollY " + window.scrollY);
