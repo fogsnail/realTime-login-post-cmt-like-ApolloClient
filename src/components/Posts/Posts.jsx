@@ -16,7 +16,7 @@ function Posts(props) {
     GET_POST,
     {
       variables: {
-        limit: 2,
+        limit: 5,
         // cursor: null,
       },
     }
@@ -155,10 +155,14 @@ function Posts(props) {
       document: ADD_POST_SUB,
       variables: {},
       updateQuery: (prev, { subscriptionData }) => {
+        console.log(prev);
+        console.log(subscriptionData)
         if (!subscriptionData.data) return prev;
-        return Object.assign({}, prev, {
-          getAllPost: {},
-        });
+        else {
+          var prevPost = JSON.parse(JSON.stringify(prev));
+          prevPost.getAllPost.data.unshift(subscriptionData.data.createPostSub)
+          return {...prevPost}
+        }
       },
     });
   }
