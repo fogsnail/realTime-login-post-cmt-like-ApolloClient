@@ -9,6 +9,7 @@ import {
   UPDATE_COMMENT_SUB,
   LIKE_POST_NOTI_SUB,
   COMMENT_POST_NOTI_SUB,
+  UPDATE_POST_SUB,
 } from "../../graphqls/subscriptions";
 import PostItem from "./PostItem";
 import "./style.css";
@@ -49,6 +50,7 @@ function Posts(props) {
     subscribeNewPost();
     subscribeUpdateComment();
     subscribeDeleteComment();
+    subscribeUpdatePost();
   }, []);
 
   useEffect(() => {
@@ -256,6 +258,33 @@ function Posts(props) {
     });
   }
 
+  function subscribeUpdatePost(){
+    subscribeToMore({
+      document: UPDATE_POST_SUB,
+      variables: {},
+      updateQuery: (prev, { subscriptionData }) => {
+        console.log(prev);
+        console.log(subscriptionData);
+        if (!subscriptionData.data) return prev;
+        else {
+          var pageIndex = getItemByID(
+            prev.getAllPost.data,
+            subscriptionData.data.updatePostSub._id
+          );
+          var prevPost = JSON.parse(JSON.stringify(prev));
+          // var newComment = JSON.parse(JSON.stringify(subscriptionData));
+          // delete newComment.data.commentSub.toPostId
+          if (pageIndex === -1) {
+            return prev;
+          } else {
+            prevPost.getAllPost.data[pageIndex] = subscriptionData.data.updatePostSub
+            return { ...prevPost };
+          }
+        }
+      },
+    });
+  }
+  
   function getItemByID(listPage, id) {
     var result = -1;
     listPage.forEach((page, index) => {
