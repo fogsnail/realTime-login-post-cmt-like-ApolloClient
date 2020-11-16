@@ -59,11 +59,19 @@ export const ADD_COMMENT = gql`
 `;
 
 export const UPDATE_COMMENT = gql`
-  mutation updateComment($commentID: String!, $newCommentContent: String!, $postID:String!) {
+  mutation updateComment(
+    $commentID: String!
+    $newCommentContent: String!
+    $postID: String!
+  ) {
     updateComment(
-      data: { commentID: $commentID, newCommentContent: $newCommentContent, postID:$postID }
+      data: {
+        commentID: $commentID
+        newCommentContent: $newCommentContent
+        postID: $postID
+      }
     ) {
-      isSuccess,
+      isSuccess
       message
     }
   }
