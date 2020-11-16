@@ -93,3 +93,12 @@ export const LIKE_POST = gql`
     }
   }
 `;
+
+export const UPDATE_POST = gql`
+  mutation UpdatePost($postID: String!, $newPostContent: String!){
+    updatePost(data:{postID:$postID,newPostContent:$newPostContent}){
+      isSuccess
+      message
+    }
+  }
+`

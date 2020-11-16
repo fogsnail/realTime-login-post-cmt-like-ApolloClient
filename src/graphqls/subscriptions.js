@@ -119,3 +119,73 @@ export const ADD_POST_SUB = gql`
     }
   }
 `;
+
+
+export const LIKE_POST_NOTI_SUB = gql`
+  subscription LikePostNotiSub($owner: String!){
+    likePostNotiSub(owner:$owner){
+      userLike{
+        _id
+        profileName
+        email
+      }
+      owner{
+        _id
+        profileName
+        email
+      }
+      _id
+      likes
+      listOfLike{
+        _id
+        profileName
+        email
+      }
+    }
+  } 
+`;
+
+export const COMMENT_POST_NOTI_SUB = gql`
+  subscription CommentNotiSub($owner: String!){
+    commentNotiSub(owner:$owner){
+      userComment{
+        _id
+        profileName
+        email
+      }
+      postID
+    }
+  } 
+`;
+
+export const UPDATE_POST_SUB = gql`
+  subscription {
+    updatePostSub {
+      _id
+      owner {
+        _id
+        profileName
+        email
+      }
+      content
+      likes
+      listOfLike {
+        _id
+        profileName
+        email
+      }
+      createdAt
+      comments
+      listOfComment {
+        _id
+        owner {
+          _id
+          profileName
+          email
+        }
+        content
+        createdAt
+      }
+    }
+  }
+`
