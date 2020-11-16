@@ -7,27 +7,46 @@ import {
   DELETE_COMMENT_SUB,
   LIKE_POST_SUB,
   UPDATE_COMMENT_SUB,
+  LIKE_POST_NOTI_SUB,
+  COMMENT_POST_NOTI_SUB
 } from "../../graphqls/subscriptions";
 import PostItem from "./PostItem";
 import "./style.css";
+import {toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+toast.configure({
+  autoClose: 2000,
+  draggable: false,
+  limit: 3,
+  closeOnClick: true,
+  pauseOnHover: true,
+  hideProgressBar: false,
+});
+
 
 function Posts(props) {
   const { loading, data, error, fetchMore, subscribeToMore } = useQuery(
     GET_POST,
     {
       variables: {
-        limit: 5,
-        // cursor: null,
+        limit: 5
       },
     }
   );
-
-  // const { subscribeToMore } = useQuery(GET_POST);]
-  const [idLastPost, setIdLastPost] = useState(null);
-  const likePostSub = useSubscription(LIKE_POST_SUB);
-  // const {
-  //   data: { likePostSub },
-  // } = useSubscription(LIKE_POST_SUB);
+  const {data:likePostNotiSub} = useSubscription(LIKE_POST_NOTI_SUB,
+    {
+      variables:{
+        owner : props.infoUser.me.email
+      }
+    }
+  );
+  const {data:commentNotiSub} = useSubscription(COMMENT_POST_NOTI_SUB,
+    {
+      variables:{
+        owner : props.infoUser.me.email
+      }
+    }
+  );
 
   useEffect(() => {
     subscribeNewLike();
@@ -44,6 +63,25 @@ function Posts(props) {
     };
   }, [data]);
 
+  useEffect(() =>{
+    if(likePostNotiSub){
+      if(likePostNotiSub.likePostNotiSub.userLike.email !== props.infoUser.me.email){
+        toast.info(`🦄 ${likePostNotiSub.likePostNotiSub.userLike.email} like your post`);
+      }
+    }
+    
+  },[likePostNotiSub])
+
+  useEffect(()=>{
+    if(commentNotiSub){
+      console.log(commentNotiSub.commentNotiSub.userComment.email)
+      if(commentNotiSub.commentNotiSub.userComment.email !== props.infoUser.me.email){
+        toast.info(`🦄 ${commentNotiSub.commentNotiSub.userComment.email} comment your post`);
+      }
+    }
+  },[commentNotiSub])
+
+  
   function scrollPostList() {
     const listPost = document.getElementById("post");
     // console.log("scrollY " + window.scrollY);
@@ -222,6 +260,8 @@ function Posts(props) {
       },
     });
   }
+
+ 
 
   function getItemByID(listPage, id) {
     var result = -1;
