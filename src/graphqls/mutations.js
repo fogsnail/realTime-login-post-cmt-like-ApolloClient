@@ -40,15 +40,6 @@ export const REGISTER_USER = gql`
   }
 `;
 
-export const ADD_POST = gql`
-  mutation AddPost($post: String!) {
-    createPost(data: { postContent: $post }) {
-      isSuccess
-      message
-    }
-  }
-`;
-
 export const ADD_COMMENT = gql`
   mutation addComment($commentContent: String!, $postID: String!) {
     addComment(data: { commentContent: $commentContent, postID: $postID }) {
@@ -94,11 +85,20 @@ export const LIKE_POST = gql`
   }
 `;
 
-export const UPDATE_POST = gql`
-  mutation UpdatePost($postID: String!, $newPostContent: String!){
-    updatePost(data:{postID:$postID,newPostContent:$newPostContent}){
+export const ADD_POST = gql`
+  mutation AddPost($post: String!) {
+    createPost(data: { postContent: $post }) {
       isSuccess
       message
     }
   }
-`
+`;
+
+export const UPDATE_POST = gql`
+  mutation UpdatePost($postID: String!, $newPostContent: String!) {
+    updatePost(data: { postID: $postID, newPostContent: $newPostContent }) {
+      isSuccess
+      message
+    }
+  }
+`;

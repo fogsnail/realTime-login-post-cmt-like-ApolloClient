@@ -13,12 +13,13 @@ import { ADD_POST, LOGOUT_USER } from "../graphqls/mutations";
 import { USER } from "../graphqls/querys";
 import auth from "./auth";
 import Posts from "./Posts/Posts";
+import PostDialog from "./Posts/PostDialog";
 
 export const AppLayout = (props) => {
   const [setLogout] = useMutation(LOGOUT_USER);
-  const [addPostCt] = useMutation(ADD_POST);
-  const [openFormCmt, setOpenFormCmt] = useState(false);
-  const [post, setPost] = useState("nothing");
+  const [openDialog, setOpenDialog] = useState(false);
+  const [postSelected, setPostSelected] = useState("");
+
   const [isLoadingPage, setIsLoadingPage] = useState(false);
 
   // const { data } = useQuery(USER);
@@ -27,22 +28,15 @@ export const AppLayout = (props) => {
 
   if (loading) return <div>loading...</div>;
   if (error) return <div>error</div>;
-  function handleChange(event) {
-    // console.log(event.target.value);
-    if (event.target.name === "post") setPost(event.target.value);
-  }
 
   function setLoadingPage() {
     setIsLoadingPage(true);
     // console.log(isLoadingPage);
   }
-
-  function addPost() {
-    console.log(post);
-    // infoUser();
-    addPostCt({ variables: { post: post } }).then((res) => console.log(res));
+  function shouldOpenDialog(postSelected) {
+    setPostSelected(postSelected);
+    setOpenDialog(!openDialog);
   }
-
   return (
     <div className="body-private">
       <h4
@@ -72,7 +66,7 @@ export const AppLayout = (props) => {
         </button>
         <button
           className="btn btn-info btn-round ml-4"
-          onClick={() => setOpenFormCmt(true)}
+          onClick={() => setOpenDialog(true)}
         >
           Add Post
         </button>
@@ -80,56 +74,23 @@ export const AppLayout = (props) => {
 
       <Grid container spacing={2} style={{ minHeight: "1000px" }}>
         <Grid item md={3} sm={2} xs={12}>
-          <Dialog
-            open={openFormCmt}
-            onClose={() => {
-              setOpenFormCmt(false);
-            }}
-            aria-labelledby="form-dialog-title"
-          >
-            <DialogTitle id="form-dialog-title">
-              {data.me.profileName}
-            </DialogTitle>
-            <DialogContent style={{ minWidth: "600px" }}>
-              <TextField
-                name="post"
-                multiline
-                // autoFocus
-                margin="dense"
-                id="name"
-                label="What's on your mind?"
-                type="email"
-                fullWidth
-                onChange={(event) => {
-                  handleChange(event);
-                }}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={() => {
-                  setOpenFormCmt(false);
-                }}
-                color="primary"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={() => {
-                  addPost();
-                  setOpenFormCmt(false);
-                }}
-                color="primary"
-              >
-                Add
-              </Button>
-            </DialogActions>
-          </Dialog>
+          {openDialog && (
+            <PostDialog
+              infoUser={data.me.profileName}
+              shouldOpenDialog={shouldOpenDialog}
+              openDialog={openDialog}
+              postSelected={postSelected}
+            />
+          )}
         </Grid>
 
         <Grid id="post" item md={5} sm={6} xs={12}>
           <h1>List</h1>
-          <Posts infoUser={data} setLoadingPage={setLoadingPage} />
+          <Posts
+            infoUser={data}
+            setLoadingPage={setLoadingPage}
+            shouldOpenDialog={(postSelected) => shouldOpenDialog(postSelected)}
+          />
           {/* {isLoadingPage ? <h3>Loading</h3> : ""} */}
         </Grid>
       </Grid>

@@ -1,5 +1,5 @@
-import { gql, useMutation } from "@apollo/client";
-import React, { useState, useRef, useEffect } from "react";
+import { useMutation } from "@apollo/client";
+import React, { useState } from "react";
 import Moment from "react-moment";
 import { ADD_COMMENT, LIKE_POST } from "../../graphqls/mutations";
 import Comment from "./Comment";
@@ -84,14 +84,28 @@ function PostItem(props) {
   function checkEditPost() {
     var result = false;
     // props.me && console.log(props.me.email);
-    console.log(props.post.owner.email);
     if (props.infoUser.me.email === props.post.owner.email)
       return (result = true);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 
-  console.log(props);
+  // function handleEditPost(id) {
+  //   updateComment({
+  //     variables: {
+  //       commentID: id,
+  //       newCommentContent: updateCommentContent,
+  //       postID: props.postID,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => console.log(err));
+  //   props.shouldOpenDialog(id);
+  //   console.log(id);
+  // }
+
   return (
     <div>
       <h6 style={{ marginBottom: "1em" }}>
@@ -127,7 +141,19 @@ function PostItem(props) {
           <div
             className={isAction ? "action__group--show" : "action__group--hide"}
           >
-            {checkEditPost() ? <div className="action__edit">Edit</div> : ""}
+            {checkEditPost() ? (
+              <div
+                className="action__edit"
+                onClick={() => {
+                  props.shouldOpenDialog(props.post);
+                  setIsAction(!isAction);
+                }}
+              >
+                Edit
+              </div>
+            ) : (
+              ""
+            )}
             {checkEditPost() ? <div className="action__edit">Delete</div> : ""}
           </div>
         </div>
