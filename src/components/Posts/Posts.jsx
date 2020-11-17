@@ -60,21 +60,29 @@ function Posts(props) {
     };
   }, [data]);
 
-
-  useEffect(() =>{
-    if(likePostNotiSub){
-      if(likePostNotiSub.likePostNotiSub.userLike.email !== props.infoUser.me.email){
-        toast.info(`🦄 ${likePostNotiSub.likePostNotiSub.userLike.profileName} like your post`);
+  useEffect(() => {
+    if (likePostNotiSub) {
+      if (
+        likePostNotiSub.likePostNotiSub.userLike.email !==
+        props.infoUser.me.email
+      ) {
+        toast.info(
+          `🦄 ${likePostNotiSub.likePostNotiSub.userLike.profileName} like your post`
+        );
       }
     }
   }, [likePostNotiSub]);
 
-
-  useEffect(()=>{
-    if(commentNotiSub){
-      console.log(commentNotiSub.commentNotiSub.userComment.email)
-      if(commentNotiSub.commentNotiSub.userComment.email !== props.infoUser.me.email){
-        toast.info(`🦄 ${commentNotiSub.commentNotiSub.userComment.profileName} comment your post`);
+  useEffect(() => {
+    if (commentNotiSub) {
+      console.log(commentNotiSub.commentNotiSub.userComment.email);
+      if (
+        commentNotiSub.commentNotiSub.userComment.email !==
+        props.infoUser.me.email
+      ) {
+        toast.info(
+          `🦄 ${commentNotiSub.commentNotiSub.userComment.profileName} comment your post`
+        );
       }
     }
   }, [commentNotiSub]);
@@ -258,7 +266,7 @@ function Posts(props) {
     });
   }
 
-  function subscribeUpdatePost(){
+  function subscribeUpdatePost() {
     subscribeToMore({
       document: UPDATE_POST_SUB,
       variables: {},
@@ -277,14 +285,15 @@ function Posts(props) {
           if (pageIndex === -1) {
             return prev;
           } else {
-            prevPost.getAllPost.data[pageIndex] = subscriptionData.data.updatePostSub
+            prevPost.getAllPost.data[pageIndex] =
+              subscriptionData.data.updatePostSub;
             return { ...prevPost };
           }
         }
       },
     });
   }
-  
+
   function getItemByID(listPage, id) {
     var result = -1;
     listPage.forEach((page, index) => {
