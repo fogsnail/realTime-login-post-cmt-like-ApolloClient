@@ -39,8 +39,12 @@ function RegisterForm(props) {
           // props.history.push("/dmnadmnsa");
           // <Redirect from="register" to="/" />;
           // history.push()
-          if (res.data.register.isSuccess === true)
+          
+          if (res.data.register.isSuccess === true){
             alert("Register successfully.");
+            props.history.push("/login")
+          }
+
           else {
             alert(res.data.register.message);
           }

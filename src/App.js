@@ -24,7 +24,7 @@ import SignPageForm from "./components/SignPage/SignPageForm";
 // import { machineId, machineIdSync } from "node-machine-id";
 
 const wsLink = new WebSocketLink({
-  uri: `ws:/10.1.16.186:8080/graphql`,
+  uri: `ws://localhost:4000/graphql`,
   options: {
     reconnect: true,
   },
@@ -32,7 +32,7 @@ const wsLink = new WebSocketLink({
 });
 
 const httpLink = new HttpLink({
-  uri: "http://10.1.16.186:8080/graphql",
+  uri: "http://localhost:4000/graphql",
   // cache: new InMemoryCache(),
   credentials: "include",
 });
@@ -52,10 +52,19 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
   operation.setContext({
     headers: {
-      authorization: `Bearer ${localStorage.getItem("token")}` || null,
+      authorization: `Bearer ${localStorage.getItem("token")}` || null
     },
   });
-  return forward(operation);
+  // console.log(operation)
+  // console.log(forward(operation))
+  return forward(operation)
+  // .map(res =>{
+  //   var a = operation.getContext();
+  //   var b = a.context.headers.get(
+  //     'Host',
+  //   );
+  //   console.log(b)
+  // })
 });
 
 const client = new ApolloClient({
