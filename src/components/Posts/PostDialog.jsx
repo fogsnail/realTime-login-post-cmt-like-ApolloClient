@@ -38,7 +38,7 @@ function PostDialog(props) {
   }
 
   function checkAddOrUpdate() {
-    if (props.postSelected._id) {
+    if (props.postSelected) {
       updatePost();
     } else {
       addPost();
