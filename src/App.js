@@ -24,7 +24,7 @@ import SignPageForm from "./components/SignPage/SignPageForm";
 // import { machineId, machineIdSync } from "node-machine-id";
 
 const wsLink = new WebSocketLink({
-  uri: `ws:/10.1.16.186:8080/graphql`,
+  uri: `ws:/10.1.16.189:4000/graphql`,
   options: {
     reconnect: true,
   },
@@ -32,7 +32,7 @@ const wsLink = new WebSocketLink({
 });
 
 const httpLink = new HttpLink({
-  uri: "http://10.1.16.186:8080/graphql",
+  uri: "http://10.1.16.189:4000/graphql",
   // cache: new InMemoryCache(),
   credentials: "include",
 });
