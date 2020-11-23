@@ -29,7 +29,7 @@ function Posts(props) {
     GET_POST,
     {
       variables: {
-        limit: 5,
+        limit: 2,
       },
     }
   );
@@ -96,8 +96,8 @@ function Posts(props) {
     // console.log(window.scrollY + window.innerHeight);
     // console.log(listPost.clientHeight + listPost.offsetTop);
     if (
-      window.scrollY + window.innerHeight + 8 ===
-      listPost.clientHeight + listPost.offsetTop
+      window.scrollY + window.innerHeight >=
+      (listPost.clientHeight + listPost.offsetTop) * 0.85
     ) {
       var id = null;
       if (data) {
@@ -106,7 +106,7 @@ function Posts(props) {
       console.log(id);
       fetchMore({
         variables: {
-          limit: 5,
+          limit: 2,
           cursor: id,
           // cursor: data.getAllPost[data.getAllPost.length - 1]._id,
         },

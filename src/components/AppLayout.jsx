@@ -49,9 +49,12 @@ export const AppLayout = (props) => {
         {data.me.profileName}
         🙊🐤🦑🐙🐢🦂🕸🕷🦗🦗🦟🐜🐞🦋🐛🐴🐺🐕🐩🐲
       </h4>
-      <div className="btn-action">
+      <div className="nav__action">
+        <button className="btn-action ml-4" onClick={() => setOpenDialog(true)}>
+          Add Post
+        </button>
         <button
-          className="btn btn-info btn-round  ml-4 mb-2"
+          className="btn-action   mr-4"
           onClick={() => {
             setLogout().then((res) => {
               console.log(res);
@@ -63,12 +66,6 @@ export const AppLayout = (props) => {
           }}
         >
           Logout
-        </button>
-        <button
-          className="btn btn-info btn-round ml-4"
-          onClick={() => setOpenDialog(true)}
-        >
-          Add Post
         </button>
       </div>
 
