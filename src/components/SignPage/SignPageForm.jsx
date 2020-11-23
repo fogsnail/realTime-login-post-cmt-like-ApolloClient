@@ -23,7 +23,7 @@ function SignPageForm(props) {
           <button
             // onClick={() => setIsOpenLogin(true)}
             type="button"
-            className="btn btn-info btn-round"
+            className="btn btn-action btn-info btn-round"
           >
             Login
           </button>

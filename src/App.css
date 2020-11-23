@@ -1,3 +1,6 @@
+.html{
+  font-size: 62.5%;
+}
 .body {
   position: fixed;
   top: 0;
@@ -14,12 +17,6 @@ body {
   overflow-x: hidden;
 }
 
-/* .btn-info:focus,
-.btn-info.focus {
-  box-shadow: none !important;
-  color: #fff;
-} */
-
 .body-private {
   /* position: fixed; */
   /* top: 0;
@@ -29,11 +26,8 @@ body {
   /* background-color: rgb(193, 233, 219); */
   background: url("./background2.jpg") no-repeat;
   background-size: auto;
-  /* background-position: top; */
   background-attachment: fixed;
-  /* background-size: 100% 100%; */
-  overflow: hidden;
-  /* height: 100%; */
+  position: relative;
 }
 
 .container {

@@ -111,7 +111,7 @@ function LoginForm(props) {
                     </div>
                     <button
                       type="submit"
-                      className="btn btn-info btn-block btn-round"
+                      className="btn btn-info btn-action btn-block btn-round"
                       // type="button"
                       // className="close"
                     >
