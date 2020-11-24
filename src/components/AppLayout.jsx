@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import {
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -14,6 +15,8 @@ import { USER } from "../graphqls/querys";
 import auth from "./auth";
 import Posts from "./Posts/Posts";
 import PostDialog from "./Posts/PostDialog";
+import Boulevard from "../Boulevard.mp4";
+import Boulevard2 from "../Boulevard.webm";
 
 export const AppLayout = (props) => {
   const [setLogout] = useMutation(LOGOUT_USER);
@@ -29,8 +32,8 @@ export const AppLayout = (props) => {
   if (loading) return <div>loading...</div>;
   if (error) return <div>error</div>;
 
-  function setLoadingPage() {
-    setIsLoadingPage(true);
+  function setLoadingPage(value) {
+    setIsLoadingPage(value);
     // console.log(isLoadingPage);
   }
   function shouldOpenDialog(postSelected) {
@@ -39,6 +42,13 @@ export const AppLayout = (props) => {
   }
   return (
     <div className="body-private">
+      <div className="bg-video">
+        <video className="bg-video__content" autoPlay muted loop>
+          <source src={Boulevard} type="video/mp4" />
+          <source src={Boulevard2} type="video/webm" />
+          Your browser is not supported
+        </video>
+      </div>
       <h4
         className="p4"
         // style={{ margin: "1em" }}
@@ -81,14 +91,20 @@ export const AppLayout = (props) => {
           )}
         </Grid>
 
-        <Grid id="post" item md={5} sm={6} xs={12}>
+        <Grid id="post" className="post__list" item md={5} sm={6} xs={12}>
           <h1>List</h1>
           <Posts
             infoUser={data}
             setLoadingPage={setLoadingPage}
             shouldOpenDialog={(postSelected) => shouldOpenDialog(postSelected)}
           />
-          {/* {isLoadingPage ? <h3>Loading</h3> : ""} */}
+          {isLoadingPage ? (
+            <div className="loading">
+              <CircularProgress />
+            </div>
+          ) : (
+            ""
+          )}
         </Grid>
       </Grid>
     </div>
