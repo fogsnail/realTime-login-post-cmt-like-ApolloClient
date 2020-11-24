@@ -96,12 +96,17 @@ function Posts(props) {
       window.scrollY + window.innerHeight >=
       (listPost.clientHeight + listPost.offsetTop) * 0.8
     ) {
-      if (data.getAllPost.data.length < data.getAllPost.totalPost) {
+      var id = null;
+      var lengthPost = -1;
+      var totalPost = 0;
+      if (data) {
+        id = data.getAllPost.data[data.getAllPost.data.length - 1]._id;
+        lengthPost = data.getAllPost.data.length;
+        totalPost = data.getAllPost.totalPost;
+      }
+      if (lengthPost < totalPost) {
         window.removeEventListener("scroll", scrollPostList);
-        var id = null;
-        if (data) {
-          id = data.getAllPost.data[data.getAllPost.data.length - 1]._id;
-        }
+
         fetchMore({
           variables: {
             limit: 2,
@@ -125,6 +130,8 @@ function Posts(props) {
         props.setLoadingPage(true);
         console.log("loading");
       } else {
+        window.removeEventListener("scroll", scrollPostList);
+        console.log("full page");
         props.setLoadingPage(false);
       }
     }
