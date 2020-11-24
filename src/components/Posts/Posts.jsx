@@ -89,17 +89,15 @@ function Posts(props) {
 
   function scrollPostList() {
     const listPost = document.getElementById("post");
-    // console.log("scrollY " + window.scrollY);
-    // console.log(" innerHeight " + window.innerHeight);
-    // console.log(listPost.clientHeight);
-    // console.log(listPost.offsetTop);
-    console.log(window.scrollY + window.innerHeight);
-    console.log(listPost.clientHeight + listPost.offsetTop);
+    // console.log(window.scrollY + window.innerHeight);
+    // console.log(listPost.clientHeight + listPost.offsetTop);
+
     if (
-      window.scrollY + window.innerHeight ===
-      listPost.clientHeight + listPost.offsetTop
+      window.scrollY + window.innerHeight >=
+      (listPost.clientHeight + listPost.offsetTop) * 0.8
     ) {
       if (data.getAllPost.data.length < data.getAllPost.totalPost) {
+        window.removeEventListener("scroll", scrollPostList);
         var id = null;
         if (data) {
           id = data.getAllPost.data[data.getAllPost.data.length - 1]._id;
@@ -108,10 +106,9 @@ function Posts(props) {
           variables: {
             limit: 2,
             cursor: id,
-            // cursor: data.getAllPost[data.getAllPost.length - 1]._id,
           },
           updateQuery: (prev, { fetchMoreResult }) => {
-            console.log(prev);
+            // console.log(prev);
             const afterConcat = {
               getAllPost: {
                 data: [
@@ -303,17 +300,7 @@ function Posts(props) {
     });
     return result;
   }
-
-  // if (loading) return <p>Loading</p>;
-  // if (error) return <p>Error :(</p>;
-  // if (data) console.log(data);
-  // console.log(data);
-  // console.log(data.getAllPost[data.getAllPost.length - 1]._id);
-  // setIdLastPost(data.getAllPost[data.getAllPost.length - 1]._id);
-  // if (likePostSub.data){
-  //   console.log(likePostSub.data);
-  //   data. =
-  // }
+  if (data) console.log(data);
   return (
     <Fragment>
       {data &&
