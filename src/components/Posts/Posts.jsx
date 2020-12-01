@@ -96,9 +96,10 @@ function Posts(props) {
     // console.log(window.scrollY + window.innerHeight);
     // console.log(listPost.clientHeight + listPost.offsetTop);
     if (
-      window.scrollY + window.innerHeight + 8 ===
-      listPost.clientHeight + listPost.offsetTop
+      window.scrollY + window.innerHeight + 8 >
+      (listPost.clientHeight + listPost.offsetTop) * .8
     ) {
+      window.removeEventListener("scroll", scrollPostList);
       var id = null;
       if (data) {
         id = data.getAllPost.data[data.getAllPost.data.length - 1]._id;
@@ -106,7 +107,7 @@ function Posts(props) {
       console.log(id);
       fetchMore({
         variables: {
-          limit: 5,
+          limit: 2,
           cursor: id,
           // cursor: data.getAllPost[data.getAllPost.length - 1]._id,
         },
@@ -121,6 +122,7 @@ function Posts(props) {
               totalPost: fetchMoreResult.getAllPost.totalPost,
             },
           };
+          
           if (!fetchMoreResult) return prev;
           else return afterConcat;
         },

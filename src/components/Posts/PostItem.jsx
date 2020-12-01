@@ -42,7 +42,9 @@ function PostItem(props) {
   function handleSetLike() {
     setLikePost({ variables: { postID: props.post._id } }).then((res) =>
       console.log(res)
-    );
+    ).catch(err =>{
+      console.log(err)
+    });
   }
 
   // function checkDeleteComment(){

@@ -10,6 +10,7 @@ import {
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { onError } from "@apollo/client/link/error";
 import "./App.css";
 import { AppLayout } from "./components/AppLayout";
 import { ProtectedRoute } from "./components/protected.route";
@@ -17,7 +18,9 @@ import { ProtectedBackRoute } from "./components/protectedBack.route";
 import LoginForm from "./components/SignPage/LoginForm";
 import RegisterForm from "./components/SignPage/RegisterForm";
 import SignPageForm from "./components/SignPage/SignPageForm";
-
+import zIndex from "@material-ui/core/styles/zIndex";
+import auth from "./components/auth";
+import { Redirect } from 'react-router-dom'
 // import { machineId, machineIdSync } from "node-machine-id";
 //  subcription
 
@@ -68,9 +71,47 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   // })
 });
 
+
+
+const errLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
+  console.log(graphQLErrors);
+  console.log(networkError);
+  console.log(operation.getContext());
+  console.log(forward(operation));
+  const context = operation.getContext();
+  console.log(context.headers)
+  if (graphQLErrors) {
+    for (let err of graphQLErrors) {
+      console.log(err)
+      if (err.extensions.code === 'UNAUTHENTICATED') {
+        console.log("het han token")
+        const oldHeaders = operation.getContext().headers;
+        // console.log(oldHeaders)
+        operation.setContext({
+          headers: {
+            ...oldHeaders,
+            // authorization: getNewToken(),
+          },
+        });
+        return forward(operation);
+      }
+      if(err.extensions.code === "INTERNAL_SERVER_ERROR"){
+        auth.logout(() => {
+          localStorage.removeItem("token");
+        });
+        return null
+      }
+    }
+    if (networkError) {
+      console.log(`[Network error]: ${networkError}`);
+    }
+  }
+});
+
 const client = new ApolloClient({
   // link: splitLink,
-  link: concat(authMiddleware, splitLink),
+  // link: concat(authMiddleware, splitLink, errLink),
+  link: errLink.concat(authMiddleware.concat(splitLink)),
   cache: new InMemoryCache(),
 });
 
