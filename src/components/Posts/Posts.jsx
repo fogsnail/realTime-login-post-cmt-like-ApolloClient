@@ -29,7 +29,7 @@ function Posts(props) {
     GET_POST,
     {
       variables: {
-        limit: 2,
+        limit: 5,
       },
     }
   );
@@ -89,44 +89,51 @@ function Posts(props) {
 
   function scrollPostList() {
     const listPost = document.getElementById("post");
-    // console.log("scrollY " + window.scrollY);
-    // console.log(" innerHeight " + window.innerHeight);
-    // console.log(listPost.clientHeight);
-    // console.log(listPost.offsetTop);
     // console.log(window.scrollY + window.innerHeight);
     // console.log(listPost.clientHeight + listPost.offsetTop);
+
     if (
       window.scrollY + window.innerHeight >=
-      (listPost.clientHeight + listPost.offsetTop) * 0.85
+      (listPost.clientHeight + listPost.offsetTop) * 0.8
     ) {
       var id = null;
+      var lengthPost = -1;
+      var totalPost = 0;
       if (data) {
         id = data.getAllPost.data[data.getAllPost.data.length - 1]._id;
+        lengthPost = data.getAllPost.data.length;
+        totalPost = data.getAllPost.totalPost;
       }
-      console.log(id);
-      fetchMore({
-        variables: {
-          limit: 2,
-          cursor: id,
-          // cursor: data.getAllPost[data.getAllPost.length - 1]._id,
-        },
-        updateQuery: (prev, { fetchMoreResult }) => {
-          console.log(prev);
-          const afterConcat = {
-            getAllPost: {
-              data: [
-                ...prev.getAllPost.data,
-                ...fetchMoreResult.getAllPost.data,
-              ],
-              totalPost: fetchMoreResult.getAllPost.totalPost,
-            },
-          };
-          if (!fetchMoreResult) return prev;
-          else return afterConcat;
-        },
-      });
-      // props.setLoadingPage();
-      console.log("loading");
+      if (lengthPost < totalPost) {
+        window.removeEventListener("scroll", scrollPostList);
+
+        fetchMore({
+          variables: {
+            limit: 2,
+            cursor: id,
+          },
+          updateQuery: (prev, { fetchMoreResult }) => {
+            // console.log(prev);
+            const afterConcat = {
+              getAllPost: {
+                data: [
+                  ...prev.getAllPost.data,
+                  ...fetchMoreResult.getAllPost.data,
+                ],
+                totalPost: fetchMoreResult.getAllPost.totalPost,
+              },
+            };
+            if (!fetchMoreResult) return prev;
+            else return afterConcat;
+          },
+        });
+        props.setLoadingPage(true);
+        console.log("loading");
+      } else {
+        window.removeEventListener("scroll", scrollPostList);
+        console.log("full page");
+        props.setLoadingPage(false);
+      }
     }
   }
   function subscribeUpdateComment() {
@@ -135,9 +142,6 @@ function Posts(props) {
       variables: {},
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
-        // return Object.assign({}, prev, {
-        //   getAllPost: {},
-        // });
         else {
           var pageIndex = getItemByID(
             prev.getAllPost.data,
@@ -303,17 +307,7 @@ function Posts(props) {
     });
     return result;
   }
-
-  // if (loading) return <p>Loading</p>;
-  // if (error) return <p>Error :(</p>;
-  // if (data) console.log(data);
-  // console.log(data);
-  // console.log(data.getAllPost[data.getAllPost.length - 1]._id);
-  // setIdLastPost(data.getAllPost[data.getAllPost.length - 1]._id);
-  // if (likePostSub.data){
-  //   console.log(likePostSub.data);
-  //   data. =
-  // }
+  if (data) console.log(data);
   return (
     <Fragment>
       {data &&

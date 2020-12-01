@@ -1,4 +1,4 @@
-.html{
+.html {
   font-size: 62.5%;
 }
 .body {
@@ -24,9 +24,9 @@ body {
   bottom: 0;
   left: 0; */
   /* background-color: rgb(193, 233, 219); */
-  background: url("./background2.jpg") no-repeat;
+  /* background: url("./background2.jpg") no-repeat;
   background-size: auto;
-  background-attachment: fixed;
+  background-attachment: fixed; */
   position: relative;
 }
 
